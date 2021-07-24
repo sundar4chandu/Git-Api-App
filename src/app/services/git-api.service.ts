@@ -10,11 +10,19 @@ export class GitApiService {
 
   constructor(private http: HttpClient) { }
 
-  searchUser(name: string){
+  public async searchUser(name: string) {
     const url = this.gitUrl + '/search/users?';
     const queryString = 'q=' + encodeURIComponent('user:' + name);
-    const header = {"Accept" : "application/vnd.github.v3+json"}
+    const header = { "Accept": "application/vnd.github.v3+json" }
 
-    return this.http.get(url + queryString, { headers: header}).toPromise();
+    return this.http.get(url + queryString, { headers: header }).toPromise();
+  }
+
+  public async getCommits(name): Promise<any> {
+    const url = this.gitUrl + '/search/commits?';
+    const queryString = 'q=' + encodeURIComponent('author:' + name + ' author-date:>2021-01-01');
+    const header = { "Accept": "application/vnd.github.cloak-preview+json" }
+    
+    return this.http.get(url + queryString, { headers: header }).toPromise();
   }
 }
