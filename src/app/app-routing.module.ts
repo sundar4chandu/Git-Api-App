@@ -11,6 +11,10 @@ const routes: Routes = [
     redirectTo: 'home',
     pathMatch: 'full'
   },
+  {
+    path: 'commits',
+    loadChildren: () => import('./commits/commits.module').then( m => m.CommitsPageModule)
+  },
 ];
 
 @NgModule({
