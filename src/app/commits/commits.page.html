@@ -14,7 +14,7 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
+<ion-content [fullscreen]="true" [scrollEvents]="true" (ionScroll)="getScrollPos($event.detail.scrollTop)">
   <ion-refresher slot="fixed" (ionRefresh)="refresh($event)">
     <ion-refresher-content></ion-refresher-content>
   </ion-refresher>
@@ -29,8 +29,8 @@
 
   <ion-list *ngIf="commitList">
     <ion-item-divider class="search" sticky>
-    <ion-searchbar placeholder="Search" inputmode="text" type="text" [(ngModel)]="query" [debounce]="250">
-    </ion-searchbar>
+      <ion-searchbar placeholder="Search" inputmode="text" type="text" [(ngModel)]="query" [debounce]="250">
+      </ion-searchbar>
     </ion-item-divider>
     <ion-item *ngFor="let commit of commitList | search: query" (click)="showDetails(commit)">
       <ion-avatar slot="start">
@@ -47,8 +47,9 @@
       </ion-label>
     </ion-item>
   </ion-list>
-  <ion-item *ngIf="commitList && commitList.length == 0">
-    <ion-label>No commits to show</ion-label>
+  <ion-item class="ion-text-center" *ngIf="commitList">
+    <ion-label *ngIf="commitList.length == 0">No commits to show</ion-label>
+    <ion-label *ngIf="commitList.length >= 100">Reached maximum row limit.</ion-label>
   </ion-item>
   <ion-infinite-scroll threshold="100px" (ionInfinite)="loadData($event)">
     <ion-infinite-scroll-content
@@ -56,4 +57,9 @@
       loadingText="Loading more data...">
     </ion-infinite-scroll-content>
   </ion-infinite-scroll>
+  <ion-fab vertical="bottom" horizontal="end" slot="fixed" *ngIf="backToTop" (click)="gotToTop()">
+    <ion-fab-button color="secondary">
+      <ion-icon name="arrow-up"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
 </ion-content>

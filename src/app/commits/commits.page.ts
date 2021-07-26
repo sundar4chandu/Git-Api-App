@@ -1,6 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { LoadingController, NavController, ToastController } from '@ionic/angular';
+import { IonContent, LoadingController, NavController, Platform, ToastController } from '@ionic/angular';
 import { GitApiService } from '../services/git-api.service';
 
 @Component({
@@ -18,11 +18,14 @@ export class CommitsPage implements OnInit {
   private showLoading: boolean = true;
   public backToTop: boolean = false;
 
+  @ViewChild(IonContent) content: IonContent;
+
   constructor(private gitService: GitApiService,
-              private route: ActivatedRoute,
-              private toastCtrl: ToastController,
-              private navCtrl: NavController,
-              private loadingCtrl: LoadingController) { }
+    private route: ActivatedRoute,
+    private toastCtrl: ToastController,
+    private navCtrl: NavController,
+    private platform: Platform,
+    private loadingCtrl: LoadingController) { }
 
   ngOnInit() {
     this.route.queryParams.subscribe(params => {
@@ -42,7 +45,7 @@ export class CommitsPage implements OnInit {
       if (this.commitList && this.commitList.length > 1) {
         this.commitList = this.commitList.concat(res.items);
       } else {
-      this.commitList = res.items;
+        this.commitList = res.items;
         this.totalCount = res.total_count;
       }
       if(this.showLoading) this.loadingCtrl.dismiss();
@@ -105,4 +108,17 @@ export class CommitsPage implements OnInit {
       this.showLoading = true;
     }
   }
+
+  getScrollPos(pos: number) {
+    if (pos > this.platform.height()/2) {
+         this.backToTop = true;
+    } else {
+         this.backToTop = false;
+    }
+  }
+
+  gotToTop() {
+    this.content.scrollToTop(1000);
+  }
+
 }
