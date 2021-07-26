@@ -19,7 +19,7 @@ export class GitApiService {
     return this.http.get(url + queryString, { headers: header }).toPromise();
   }
 
-  public async getrecentCommits(name?: string): Promise<any> {
+  public async getrecentCommits(name?: string, page?: number): Promise<any> {
     const url = this.gitUrl + '/search/commits?';
     const today = new Date()
     const startDate = today.getFullYear() + '-01-01';
@@ -27,6 +27,9 @@ export class GitApiService {
     let queryString = 'q=' + encodeURIComponent('author-date:' + endDate + ' sort:author-date-desc');
     if(name){
       queryString = 'q=' + encodeURIComponent('author:' + name + ' author-date:' + startDate + '..' + endDate + ' sort:author-date-desc');
+    }
+    if(page && page > 1){
+      queryString += ' page:' + page;
     }
     const header = { "Accept": "application/vnd.github.cloak-preview+json" }
 
