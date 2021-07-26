@@ -7,6 +7,7 @@ import { IonicModule } from '@ionic/angular';
 import { CommitsPageRoutingModule } from './commits-routing.module';
 
 import { CommitsPage } from './commits.page';
+import { SearchPipe } from '../pipes/search.pipe';
 
 @NgModule({
   imports: [
@@ -15,6 +16,6 @@ import { CommitsPage } from './commits.page';
     IonicModule,
     CommitsPageRoutingModule
   ],
-  declarations: [CommitsPage]
+  declarations: [CommitsPage, SearchPipe]
 })
 export class CommitsPageModule {}
