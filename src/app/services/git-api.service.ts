@@ -7,7 +7,7 @@ import { formatDate } from '@angular/common';
 })
 export class GitApiService {
 
-  private gitUrl = "https://api.github.com"
+  private gitUrl = "https://api.github.com";
 
   constructor(private http: HttpClient) { }
 
@@ -24,12 +24,11 @@ export class GitApiService {
     const today = new Date()
     const startDate = today.getFullYear() + '-01-01';
     const endDate = formatDate(today, 'yyyy-MM-dd', 'en');
-    let queryString = 'q=' + encodeURIComponent('author-date:' + endDate + ' sort:author-date-desc');
-    if(name){
-      queryString = 'q=' + encodeURIComponent('author:' + name + ' author-date:' + startDate + '..' + endDate + ' sort:author-date-desc');
-    }
-    if(page && page > 1){
-      queryString += ' page:' + page;
+    let queryString = 'page=' + page + '&per_page=25';
+    if (name) {
+      queryString += '&q=' + encodeURIComponent('author:' + name + ' author-date:' + startDate + '..' + endDate + ' sort:author-date-desc');
+    } else {
+      queryString += '&q=' + encodeURIComponent('author-date:' + endDate + ' sort:author-date-desc');
     }
     const header = { "Accept": "application/vnd.github.cloak-preview+json" }
 
