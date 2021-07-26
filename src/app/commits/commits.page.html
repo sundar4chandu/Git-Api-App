@@ -28,8 +28,10 @@
   </ion-header>
 
   <ion-list *ngIf="commitList">
+    <ion-item-divider class="search" sticky>
     <ion-searchbar placeholder="Search" inputmode="text" type="text" [(ngModel)]="query" [debounce]="250">
     </ion-searchbar>
+    </ion-item-divider>
     <ion-item *ngFor="let commit of commitList | search: query" (click)="showDetails(commit)">
       <ion-avatar slot="start">
         <img [src]="commit.author?.avatar_url" />
