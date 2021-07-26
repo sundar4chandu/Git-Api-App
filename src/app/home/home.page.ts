@@ -7,6 +7,17 @@ import { Component } from '@angular/core';
 })
 export class HomePage {
 
-  constructor() {}
+  public commitList;
+
+  constructor(private gitService: GitApiService,
+              private navCtrl: NavController,
+              private toastCtrl: ToastController) {}
+
+
+  getRecentCommits(name?){
+    let params = {};
+    if(name) params = {username : name}
+    this.navCtrl.navigateForward(['/commits'], {queryParams: params});
+  }
 
 }
