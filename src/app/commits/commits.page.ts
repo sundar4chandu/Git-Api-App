@@ -12,6 +12,11 @@ export class CommitsPage implements OnInit {
 
   public commitList;
   public username: string;
+  private pageNumber: number = 1;
+  public totalCount;
+  private isRefresh: boolean = false;
+  private showLoading: boolean = true;
+  public backToTop: boolean = false;
 
   constructor(private gitService: GitApiService,
               private route: ActivatedRoute,
@@ -27,10 +32,20 @@ export class CommitsPage implements OnInit {
   }
 
   async getRecentCommits() {
-    await this.presentLoading();
-    return this.gitService.getrecentCommits(this.username).then((res: any) => {
+    if(this.showLoading) await this.presentLoading();
+    return this.gitService.getrecentCommits(this.username, this.pageNumber).then((res: any) => {
+      console.log(res);
+      if(this.isRefresh){
+        this.commitList = undefined;
+        this.isRefresh = false;
+      }
+      if (this.commitList && this.commitList.length > 1) {
+        this.commitList = this.commitList.concat(res.items);
+      } else {
       this.commitList = res.items;
-      this.loadingCtrl.dismiss();
+        this.totalCount = res.total_count;
+      }
+      if(this.showLoading) this.loadingCtrl.dismiss();
     }).catch(err => {
       this.loadingCtrl.dismiss();
       const msg = 'Unable to get commits';
@@ -58,6 +73,9 @@ export class CommitsPage implements OnInit {
   }
 
   refresh(ev) {
+    this.pageNumber = 1;
+    this.isRefresh = true;
+    this.showLoading = true;
     this.getRecentCommits().finally(() => {
       ev.detail.complete();
     });
@@ -67,4 +85,24 @@ export class CommitsPage implements OnInit {
     this.navCtrl.navigateRoot(['/home']);
   }
 
+  loadData(event) {
+    if (this.totalCount > this.commitList.length && this.commitList.length <= 100) {
+      this.pageNumber++;
+      this.showLoading = false;
+      this.getRecentCommits().finally(() => {
+        console.log('Done');
+        event.target.complete();
+        // App logic to determine if all data is loaded
+        // and disable the infinite scroll
+        if (this.totalCount == this.commitList.length || this.commitList.length >= 100) {
+          event.target.disabled = true;
+          this.showLoading = true;
+        }
+      })
+    } else if(this.totalCount == this.commitList.length){
+      event.target.complete();
+      event.target.disabled = true;
+      this.showLoading = true;
+    }
+  }
 }
