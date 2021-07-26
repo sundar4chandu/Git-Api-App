@@ -1,9 +1,48 @@
-<ion-header>
+<ion-header [translucent]="true">
   <ion-toolbar>
-    <ion-title>commits</ion-title>
+    <ion-title>
+      Commits
+    </ion-title>
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-buttons slot="end">
+      <ion-button (click)="goHome()">
+        <ion-icon name="home"></ion-icon>
+      </ion-button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
+<ion-content [fullscreen]="true">
+  <ion-refresher slot="fixed" (ionRefresh)="refresh($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
 
+  <ion-header collapse="condense">
+    <ion-toolbar>
+      <ion-title size="large">
+        Commits
+      </ion-title>
+    </ion-toolbar>
+  </ion-header>
+
+  <ion-list *ngIf="commitList">
+    <ion-searchbar placeholder="Search" inputmode="text" type="text" [(ngModel)]="query" [debounce]="250">
+    </ion-searchbar>
+    <ion-item *ngFor="let commit of commitList | search: query" (click)="showDetails(commit)">
+      <ion-avatar slot="start">
+        <img [src]="commit.author?.avatar_url" />
+      </ion-avatar>
+      <ion-label>
+        <span class="date">
+          <ion-note>{{ commit.commit.author.date | date: 'short' }}</ion-note>
+        </span>
+        <h3>{{ commit.commit.author.name }}</h3>
+        <p>
+          {{commit.commit.message}}
+        </p>
+      </ion-label>
+    </ion-item>
+  </ion-list>
 </ion-content>
