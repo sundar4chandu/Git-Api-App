@@ -1,0 +1,47 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>
+      Details
+    </ion-title>
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-buttons slot="end">
+      <ion-button (click)="goHome()">
+        <ion-icon name="home"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-item *ngIf="commit">
+    <ion-avatar slot="start">
+      <img [src]="commit.author?.avatar_url" />
+    </ion-avatar>
+    <ion-label>
+      <h1>{{ commit.commit.author.name }}</h1>
+      <ion-note>{{ commit.commit.author.date | date: 'short' }}</ion-note>
+    </ion-label>
+  </ion-item>
+  <div class="ion-padding" *ngIf="commit">
+    <ion-item-divider>
+      <ion-label class="ion-text-center">SHA</ion-label>
+    </ion-item-divider>
+    <p>
+      {{commit.sha}}
+    </p>
+    <ion-item-divider>
+      <ion-label class="ion-text-center">Commit Message</ion-label>
+    </ion-item-divider>
+    <p>{{commit.commit.message}}</p>
+    <ion-item-divider>
+      <ion-label class="ion-text-center">Commit URL</ion-label>
+    </ion-item-divider>
+    <p>{{commit.html_url}}</p>
+    <ion-item-divider>
+      <ion-label class="ion-text-center">Repository URL</ion-label>
+    </ion-item-divider>
+    <p>{{commit.repository.html_url}}</p>
+  </div>
+</ion-content>
