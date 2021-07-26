@@ -18,11 +18,14 @@ export class GitApiService {
     return this.http.get(url + queryString, { headers: header }).toPromise();
   }
 
-  public async getCommits(name): Promise<any> {
+  public async getrecentCommits(name?: string): Promise<any> {
     const url = this.gitUrl + '/search/commits?';
-    const queryString = 'q=' + encodeURIComponent('author:' + name + ' author-date:>2021-01-01');
+    let queryString = 'q=' + encodeURIComponent('author-date:>2021-01-01 sort:committer-date');
+    if(name){
+      queryString = 'q=' + encodeURIComponent('author:' + name + ' author-date:>2021-01-01 sort:committer-date');
+    }
     const header = { "Accept": "application/vnd.github.cloak-preview+json" }
-    
+
     return this.http.get(url + queryString, { headers: header }).toPromise();
   }
 }
