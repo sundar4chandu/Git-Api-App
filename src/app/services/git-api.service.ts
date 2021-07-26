@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { formatDate } from '@angular/common';
 
 @Injectable({
   providedIn: 'root'
@@ -20,9 +21,12 @@ export class GitApiService {
 
   public async getrecentCommits(name?: string): Promise<any> {
     const url = this.gitUrl + '/search/commits?';
-    let queryString = 'q=' + encodeURIComponent('author-date:>2021-01-01 sort:committer-date');
+    const today = new Date()
+    const startDate = today.getFullYear() + '-01-01';
+    const endDate = formatDate(today, 'yyyy-MM-dd', 'en');
+    let queryString = 'q=' + encodeURIComponent('author-date:' + endDate + ' sort:author-date-desc');
     if(name){
-      queryString = 'q=' + encodeURIComponent('author:' + name + ' author-date:>2021-01-01 sort:committer-date');
+      queryString = 'q=' + encodeURIComponent('author:' + name + ' author-date:' + startDate + '..' + endDate + ' sort:author-date-desc');
     }
     const header = { "Accept": "application/vnd.github.cloak-preview+json" }
 
