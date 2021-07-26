@@ -21,6 +21,7 @@
     "@angular/platform-browser-dynamic": "~12.1.1",
     "@angular/router": "~12.1.1",
     "@capacitor/core": "3.1.2",
+    "@ionic-native/in-app-browser": "^5.34.0",
     "@ionic/angular": "^5.5.2",
     "rxjs": "~6.6.0",
     "tslib": "^2.2.0",
@@ -80,5 +81,5 @@
     "platforms": [
       "ios"
     ]
-}
+  }
 }
