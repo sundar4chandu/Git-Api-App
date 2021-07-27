@@ -4,10 +4,10 @@
       Commits
     </ion-title>
     <ion-buttons slot="start">
-      <ion-back-button></ion-back-button>
+      <ion-back-button color="secondary"></ion-back-button>
     </ion-buttons>
     <ion-buttons slot="end">
-      <ion-button (click)="goHome()">
+      <ion-button color="secondary" (click)="goHome()">
         <ion-icon name="home"></ion-icon>
       </ion-button>
     </ion-buttons>
@@ -27,11 +27,11 @@
     </ion-toolbar>
   </ion-header>
 
+  <ion-item-divider class="search" sticky>
+    <ion-searchbar placeholder="Search name/message" inputmode="text" type="text" [(ngModel)]="query" [debounce]="250">
+    </ion-searchbar>
+  </ion-item-divider>
   <ion-list *ngIf="commitList">
-    <ion-item-divider class="search" sticky>
-      <ion-searchbar placeholder="Search" inputmode="text" type="text" [(ngModel)]="query" [debounce]="250">
-      </ion-searchbar>
-    </ion-item-divider>
     <ion-item *ngFor="let commit of commitList | search: query" (click)="showDetails(commit)">
       <ion-avatar slot="start">
         <img [src]="commit.author?.avatar_url" />
@@ -50,11 +50,10 @@
   <ion-item class="ion-text-center" *ngIf="commitList">
     <ion-label *ngIf="commitList.length == 0">No commits to show</ion-label>
     <ion-label *ngIf="commitList.length >= 100">Reached maximum row limit.</ion-label>
+    <ion-label *ngIf="totalCount == commitList.length">Reached end of commits</ion-label>
   </ion-item>
   <ion-infinite-scroll threshold="100px" (ionInfinite)="loadData($event)">
-    <ion-infinite-scroll-content
-      loadingSpinner="bubbles"
-      loadingText="Loading more data...">
+    <ion-infinite-scroll-content loadingSpinner="bubbles" loadingText="Loading more data...">
     </ion-infinite-scroll-content>
   </ion-infinite-scroll>
   <ion-fab vertical="bottom" horizontal="end" slot="fixed" *ngIf="backToTop" (click)="gotToTop()">

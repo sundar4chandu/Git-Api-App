@@ -6,7 +6,17 @@
 }
 
 .search{
-    --background: white;
+    --background: var(--ion-background-color);
     --padding-start: 0px;
+    border: 1px solid var(--ion-background-color);
     --inner-padding-end: 0px;
+    margin: 1px;
+}
+
+ion-searchbar{
+    --background: var(--ion-color-dark-shade);
+    --color: var(--ion-color-light);
+    --icon-color: var(--ion-color-light);
+    --clear-button-color: var(--ion-color-light);
+    --placeholder-color: var(--ion-color-light);
 }
