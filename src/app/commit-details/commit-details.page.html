@@ -17,7 +17,7 @@
 <ion-content>
   <ion-item *ngIf="commit" lines="none">
     <ion-avatar slot="start">
-      <img [src]="commit.author?.avatar_url" />
+      <ion-img [src]="commit.author?.avatar_url"></ion-img>
     </ion-avatar>
     <ion-label>
       <h1>{{ commit.commit.author.name }}</h1>

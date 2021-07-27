@@ -27,14 +27,14 @@
     </ion-toolbar>
   </ion-header>
 
-  <ion-item-divider class="search" sticky>
+  <ion-item-divider *ngIf="commitList" class="search" sticky>
     <ion-searchbar placeholder="Search name/message" inputmode="text" type="text" [(ngModel)]="query" [debounce]="250">
     </ion-searchbar>
   </ion-item-divider>
   <ion-list *ngIf="commitList">
     <ion-item *ngFor="let commit of commitList | search: query" (click)="showDetails(commit)">
       <ion-avatar slot="start">
-        <img [src]="commit.author?.avatar_url" />
+        <ion-img [src]="commit.author?.avatar_url"></ion-img>
       </ion-avatar>
       <ion-label>
         <span class="date">
