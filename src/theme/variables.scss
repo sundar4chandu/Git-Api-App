@@ -147,6 +147,37 @@
     --ion-color-light-tint: #383a3e;
   }
 
+  :root {
+    --ion-background-color: #1e2b33;
+    --ion-background-color-rgb: 30,43,51;
+  
+    --ion-text-color: #ffffff;
+    --ion-text-color-rgb: 255,255,255;
+  
+    --ion-color-step-50: #29363d;
+    --ion-color-step-100: #354047;
+    --ion-color-step-150: #404b52;
+    --ion-color-step-200: #4b555c;
+    --ion-color-step-250: #566066;
+    --ion-color-step-300: #626b70;
+    --ion-color-step-350: #6d757a;
+    --ion-color-step-400: #788085;
+    --ion-color-step-450: #838a8f;
+    --ion-color-step-500: #8f9599;
+    --ion-color-step-550: #9aa0a3;
+    --ion-color-step-600: #a5aaad;
+    --ion-color-step-650: #b0b5b8;
+    --ion-color-step-700: #bcbfc2;
+    --ion-color-step-750: #c7cacc;
+    --ion-color-step-800: #d2d5d6;
+    --ion-color-step-850: #dddfe0;
+    --ion-color-step-900: #e9eaeb;
+    --ion-color-step-950: #f4f4f5;
+
+    --ion-card-background: var(--ion-text-color);
+    --ion-card-color: black;
+  }
+
   /*
    * iOS Dark Theme
    * -------------------------------------------
