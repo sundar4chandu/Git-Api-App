@@ -7,6 +7,10 @@ ion-col.separator:before,
 ion-col.separator:after {
   content: " ";
   flex: 1 1;
-  border-bottom: 1px solid #000;
+  border-bottom: 1px solid #fff;
   margin: auto;
+}
+ion-item.user{
+  --background: white;
+  --color: black;
 }

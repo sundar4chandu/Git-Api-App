@@ -7,7 +7,7 @@
   <ion-list>
   <ion-card>
     <ion-card-content>
-  <ion-button (click)="getRecentCommits()" expand="block" fill="clear" shape="round">
+  <ion-button (click)="getRecentCommits()" expand="block" fill="clear" shape="round" color="light">
     Get Recent Commits
   </ion-button>
     </ion-card-content>
@@ -20,18 +20,18 @@
     <ion-col class="separator" size="5"></ion-col>
   </ion-row>
   <ion-card class="ion-padding" *ngIf="users">
-    <ion-item *ngFor="let user of users" (click)="getRecentCommits(user.login)" lines="none">
+    <ion-item class="user" *ngFor="let user of users" (click)="getRecentCommits(user.login)" lines="none">
       <ion-avatar slot="start">
         <img [src]="user.avatar_url" />
       </ion-avatar>
       <ion-label>{{user.login}}</ion-label>
-      <ion-icon slot="end" name="chevron-forward"></ion-icon>
+      <ion-icon slot="end" name="chevron-forward" color="secondary"></ion-icon>
     </ion-item>
   </ion-card>
   <ion-card>
     <ion-card-content class="ion-text-center">
         <ion-input class="ion-padding-bottom" required [(ngModel)]="username" type="text" placeholder="Search Commits by Username"></ion-input>
-        <ion-button shape="round" color="primary" (click)="searchUser()" [disabled]="!username">
+        <ion-button shape="round" color="secondary" (click)="searchUser()" [disabled]="!username">
           Search
         </ion-button>
     </ion-card-content>
