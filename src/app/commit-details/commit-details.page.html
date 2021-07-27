@@ -4,10 +4,10 @@
       Details
     </ion-title>
     <ion-buttons slot="start">
-      <ion-back-button></ion-back-button>
+      <ion-back-button color="secondary" ></ion-back-button>
     </ion-buttons>
     <ion-buttons slot="end">
-      <ion-button (click)="goHome()">
+      <ion-button color="secondary" (click)="goHome()">
         <ion-icon name="home"></ion-icon>
       </ion-button>
     </ion-buttons>
@@ -15,7 +15,7 @@
 </ion-header>
 
 <ion-content>
-  <ion-item *ngIf="commit">
+  <ion-item *ngIf="commit" lines="none">
     <ion-avatar slot="start">
       <img [src]="commit.author?.avatar_url" />
     </ion-avatar>
@@ -24,24 +24,27 @@
       <ion-note>{{ commit.commit.author.date | date: 'short' }}</ion-note>
     </ion-label>
   </ion-item>
-  <div class="ion-padding" *ngIf="commit">
-    <ion-item-divider>
+  <ion-list *ngIf="commit">
+    <ion-item-divider mode="ios">
+      <ion-label class="ion-text-center">Repository Name</ion-label>
+    </ion-item-divider>
+    <p class="ion-text-center ion-padding-horizontal"> {{commit.repository.name | uppercase}} </p>
+    <ion-item-divider mode="ios">
       <ion-label class="ion-text-center">SHA</ion-label>
     </ion-item-divider>
-    <p>
-      {{commit.sha}}
-    </p>
-    <ion-item-divider>
+    <p class="ion-padding-horizontal"> {{commit.sha}} </p>
+    <ion-item-divider mode="ios">
       <ion-label class="ion-text-center">Commit Message</ion-label>
     </ion-item-divider>
-    <p>{{commit.commit.message}}</p>
-    <ion-item-divider>
-      <ion-label class="ion-text-center">Commit URL</ion-label>
-    </ion-item-divider>
-    <p>{{commit.html_url}}</p>
-    <ion-item-divider>
-      <ion-label class="ion-text-center">Repository URL</ion-label>
-    </ion-item-divider>
-    <p>{{commit.repository.html_url}}</p>
+    <p class="ion-padding-horizontal">{{commit.commit.message}}</p>
+  </ion-list>
+  <div class="ion-margin" *ngIf="commit">
+    <ion-button class="ion-margin-top" color="secondary" (click)="openUrl(commit.html_url)" expand="block" fill="outline" shape="round">
+      Open Commit
+    </ion-button>
+    <ion-button class="ion-margin-top" color="secondary" (click)="openUrl(commit.repository.html_url)" expand="block" fill="outline"
+      shape="round">
+      Open Repository
+    </ion-button>
   </div>
 </ion-content>
